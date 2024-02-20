@@ -28,18 +28,19 @@ async function run() {
     // await client.connect();
 
 
-    const projectCollection = client.db('portfolioDB').collection('projects');
+    // const projectCollection = client.db('portfolioDB').collection('projects');
+    const assignmentCollection = client.db('portfolioDB').collection('assignments');
 
-    app.get('/projects', async( req,res )=> {
-        const cursor = projectCollection.find();
-        const result = await cursor.toArray();
-        res.send(result);
-    })
+    app.get('/assignments', async(req,res) => {
+      const cursor = assignmentCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+      })
 
-    app.get('/projects/:id', async(req,res) => {
+    app.get('/assignments/:id', async(req,res) => {
         const id = req.params.id;
         const query = {_id: new ObjectId(id)};
-        const result = await projectCollection.findOne(query);
+        const result = await assignmentCollection.findOne(query);
         res.send(result);
     })
 
@@ -57,7 +58,7 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-    res.send('Portfolio is running')
+    res.send('My Portfolio is running')
 })
 
 app.listen(port, () => {
